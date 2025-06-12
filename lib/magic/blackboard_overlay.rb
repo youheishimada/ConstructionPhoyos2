@@ -14,23 +14,26 @@ module Magic
       # 黒板に文字を1行ずつ描画
       blackboard.combine_options do |c|
         c.gravity "NorthWest"
-        c.font "app/assets/fonts/ipaexg.ttf"
+        c.font "/usr/share/fonts/opentype/noto/NotoSansCJK-Regular.ttc"
         c.fill "white"
-        c.pointsize (blackboard.height * 0.06).to_i 
-        c.font "/usr/share/fonts/opentype/noto/NotoSansCJK-Regular.ttc"       
-        c.draw "text 10,10 \"年月日: #{text_data[:date]}\""
-        c.draw "text 10,20 \"工事番号: #{text_data[:work_number].gsub('-', '－')}\""
-        c.draw "text 10,30 \"工事件名: #{text_data[:project_name]}\""
-        # --- 複数行の工事内容 ---
-        y = 40
-        line_height = 10
-        text_data[:work_content].to_s.split(/\r?\n/).each do |line|
-          c.draw "text 10,#{y} \"#{line}\""
+        c.pointsize (blackboard.height * 0.05).to_i 
+         y = 20  # 初期y位置
+         line_height = 10  # 行間（フォントサイズに応じて調整）
+
+        # テキストを配列化してループ描画
+        lines = []
+        lines << "年月日: #{text_data[:date]}"
+        lines << "工事番号: #{text_data[:work_number].to_s.gsub('-', '－')}"
+        lines << "工事件名: #{text_data[:project_name]}"
+        lines += text_data[:work_content].to_s.split(/\r?\n/)  # 工事内容の複数行対応
+        lines << "箇所: #{text_data[:location]}"
+        lines << "施工者: #{text_data[:contractor]}"
+
+        lines.each do |line|
+          escaped_line = line.gsub('"', '\"')  # ダブルクォートのエスケープ
+          c.draw "text 20,#{y} \"#{escaped_line}\""
           y += line_height
         end
-        # --- 以下も同じように ---
-        c.draw "text 10,#{y+10} \"箇所: #{text_data[:location]}\""
-        c.draw "text 10,#{y+20} \"施工者: #{text_data[:contractor]}\""
       end
 
       # 写真に黒板を左下に合成
