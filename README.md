@@ -1,15 +1,17 @@
 # 建設写真支援アプリ
 
-### 手軽に工事写真の合成機能”業務の効率化”と”現場の負担の軽減”
+### 手軽に工事写真の合成機能で「業務の効率化」と「現場の負担の軽減」を実現
 
-このアプリは、**工事写真のアップロード・黒板合成・編集・ダウンロード**まで一括管理できる、建設現場向けの写真台帳作成支援ツールです。
-現場担当者の##「写真整理の手間」や##「黒板合成の煩雑さ」**を大幅に削減し、業務の効率化と現場負担の軽減を実現します。
+このアプリは、工事写真のアップロード・黒板合成・編集・ダウンロードまで一括管理できる、建設現場向けの写真台帳作成支援ツールです。
+現場担当者の「写真整理の手間」や「黒板合成の煩雑さ」を大幅に削減し、業務の効率化と現場負担の軽減を実現します。
+
+主な機能
 
 📷 写真アップロード
    工事現場で撮影した写真を簡単にアップロード＆保存
 
 🖋️ 黒板文字の合成
-   入力フォームから現場情報を入力すると、黒板テンプレ画像に自動でテキストを合成。現場ごとの記録写    真を簡単に作成
+   入力フォームから現場情報を入力すると、黒板テンプレ画像に自動でテキストを合成。現場ごとの記録写真を簡単に作成
    
 🖼️ 合成画像のダウンロード
   合成済みの黒板付き写真はワンクリックでダウンロード可能。
@@ -32,48 +34,47 @@
 
 🎯 このアプリで解決できること##
 
-工事写真台帳作成の手作業やExcel合成の負担を削減
+工事写真台帳作成にかかる手作業・Excel操作の負担を削減
 
-「黒板写真がバラバラ」「記録の抜け漏れ」も減らせる
+写真のバラバラ管理や記録漏れを防止
 
-現場ごとに台帳を整理・提出もスムーズに
+台帳の整理・提出がスムーズに
 
-写真付き日記帳や観察記録ツールとしても応用可能
+写真付き日記帳・観察記録ツールとしても応用可能
 
 ###🛠️ 制作背景
- 建設現場の写真台帳作成は「手作業やパソコンでのエクセル等の台帳アプリの操作」が多く、
-写真整理・黒板内容の転記・ダウンロードなどに多くの時間がかかっていました。
-現場の“記録業務の負担軽減”を目指して、「誰でも・どこでも・簡単に」現場写真の管理や台帳作成ができるツールとして開発しました。
+ 建設現場の写真台帳作成は、手作業やパソコンによるExcel作業が中心で、多くの時間と手間がかかっていました。
+このアプリは、**「誰でも・どこでも・簡単に」**現場写真の管理と台帳作成ができるよう、現場記録業務の負担軽減を目的に開発されました。
 
 🌐 アプリURL
- 🔗 https://constructionphotos.onrender.com/
+ 🔗 https://constructionphoyos2-1.onrender.com
 
-🗂️ モデル構成・技術スタック
+🧱 使用技術・ライブラリ
 
--言語: Ruby 3.2.0 / JavaScript
+・言語: Ruby 3.2.0 / JavaScript
 
--フレームワーク: Ruby on Rails 7.1
+・フレームワーク: Ruby on Rails 7.1
 
--DB: MySQL（開発）/ PostgreSQL（本番）
+・DB: MySQL（開発）/ PostgreSQL（本番）
 
--ファイル管理: ActiveStorage
+・ファイル管理: ActiveStorage
 
--UI: Bootstrap5/CSS
+・UI: Bootstrap5/CSS
 
--認証: Devise
+・認証: Devise
 
--画像合成: MiniMagick
+・画像合成: MiniMagick
 
--デプロイ: Render
+・デプロイ: Render
 
 モデル例
--User（ユーザー管理・認証）
+・User（ユーザー管理・認証）
 
--Project（プロジェクト単位で管理）
+・Project（プロジェクト単位で管理）
 
--Photo（工事写真＋黒板合成情報＋画像）
+・Photo（工事写真＋黒板合成情報＋画像）
 
--ActionLog（編集履歴）
+・ActionLog（編集履歴）
 
 🚀 今後のアップデート予定
 📱 スマートフォン向けUI最適化
@@ -87,6 +88,102 @@
 制作者
 shimada（個人開発／ポートフォリオ用途）
 
+## 🧭 画面遷移図
 
-!![ER図](https://lucid.app/lucidchart/52b135d4-06b8-40fb-b398-ed10fe506649/edit?viewport_loc=-11185%2C-6607%2C22205%2C8964%2Czok3yUf69dyn&invitationId=inv_f91aaa72-f8c0-46b3-baa2-de4a21e6498a)
+本アプリケーションの主要な画面の遷移構成を以下に示します。
 
+![画面遷移図](https://gyazo.com/7cc657e81ca4f6e584c4bcdbbdfdf26c/raw)
+
+- ユーザーはログイン後、プロジェクト一覧から各現場の写真管理が可能です。
+- プロジェクトごとに写真をアップロードし、黒板情報を入力することで合成処理が行われます。
+- 合成済みの写真は編集・削除・ダウンロードが可能です。
+- 編集履歴はActionLogとして記録され、将来的に閲覧可能な機能も追加予定です。
+
+データベース設計（ER図）
+
+以下は本アプリケーションのER図です。
+
+![ER図](https://gyazo.com/8488fa9eb08a09639360788814f2918c)
+
+
+ユーザーは複数のプロジェクトを持つ
+
+プロジェクトは複数の写真を持つ
+
+写真には黒板情報・編集履歴が紐づく
+
+ActiveStorageで画像ファイルを管理
+
+
+📋 データベース設計（テーブル一覧）
+
+■ Users テーブル
+
+管理者・現場担当者の情報を管理するテーブル
+
+| カラム名     | 型     | 制約        |
+|-----------|--------|-------------|
+| title     | string | null: false |
+| site_name | string | null: false |
+| name      | string | null: false |
+・has_many :projects
+
+■Projects テーブル
+
+・工事単位でのグルーピング用テーブル
+| カラム名     | 型     | 制約        |
+|-----------|--------|-------------|
+| title     | string | null: false |
+| site_name | string | null: false |
+| site_date | date   |             |
+| end_date  | date   |             |
+
+・belongs_to :user
+・has_many :photos
+
+■Photos テーブル
+・工事写真、黒板情報、合成情報を保持するテーブル
+| カラム名            | 型         | 制約              |
+|------------------|------------|-------------------|
+| category         | string     | null: false       |
+| contractor       | string     |                   |
+| date             | date       | null: false       |
+| location         | string     |                   |
+| work_content     | string     |                   |
+| work_number      | string     |                   |
+| project_name     | string     |                   |
+| taken_name       | string     |                   |
+| note             | text       |                   |
+| deleted          | boolean    | default: false    |
+| overlay_text_1～5 | string     |                   |
+| project_id       | references | foreign_key: true |
+
+・belongs_to :project
+・has_one_attached :image
+・has_one_attached :image_with_blackboard
+・has_many :action_logs
+
+ActionLogs テーブル
+
+写真の編集・削除の履歴を保存するテーブル
+
+| カラム名       | 型         | 制約                                              |
+|-------------|------------|---------------------------------------------------|
+| action_type | string     | null: false                                       |
+| detail      | text       |                                                   |
+| photo_id    | references | foreign_key: true, null: true, on_delete: nullify |
+
+🛠️ ローカルでの動作手順
+$ git clone https://github.com/yourname/construction-photos.git
+$ cd construction-photos
+$ bundle install
+$ rails db:create && rails db:migrate
+$ rails s
+
+⏰ 制作時間
+
+約80時間（設計〜実装〜テスト〜デプロイ）
+
+👤 開発者
+
+shimada（個人開発 / ポートフォリオ提出用）
