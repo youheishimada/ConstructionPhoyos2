@@ -52,11 +52,13 @@ RUN apt-get update -qq && \
     curl \
     default-mysql-client \
     libvips \
-    fonts-noto-cjk && \
+    fonts-noto-cjk \
+    fontconfig && \  
+    fc-cache -fv && \  
+    dpkg-reconfigure fontconfig && \ 
     rm -rf /var/lib/apt/lists /var/cache/apt/archives
 
-# ✅ Notoフォントの存在確認（Renderのログに表示されます）  
-RUN find /usr/share/fonts -name '*Noto*' || echo "Notoフォントが見つかりません"
+# ✅ デバッグ用（あとで削除）
 RUN echo "📦 Notoフォント検索結果:" && find /usr/share/fonts -type f -name "*CJK*.ttc"
 
 # Copy built artifacts: gems, application
