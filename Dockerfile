@@ -53,8 +53,13 @@ RUN apt-get update -qq && \
     unzip \
     default-mysql-client \
     libvips \
-    fontconfig && \
+    fontconfig \
+    locales && \
+    sed -i '/ja_JP.UTF-8/s/^# //g' /etc/locale.gen && \
+    locale-gen ja_JP.UTF-8 && \
     rm -rf /var/lib/apt/lists /var/cache/apt/archives
+
+ENV LANG=ja_JP.UTF-8
 
 # 📦 IPAexフォントのコピーと展開
 COPY ipaexfont00401.zip /tmp/
