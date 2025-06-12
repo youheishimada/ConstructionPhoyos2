@@ -52,7 +52,7 @@ RUN apt-get update -qq && \
     curl \
     default-mysql-client \
     libvips \
-    fonts-noto && \
+    fonts-noto-cjk && \
     rm -rf /var/lib/apt/lists /var/cache/apt/archives
 
 # ✅ Notoフォントの存在確認（Renderのログに表示されます）  
