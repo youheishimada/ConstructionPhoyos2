@@ -103,7 +103,7 @@ shimada（個人開発／ポートフォリオ用途）
 
 以下は本アプリケーションのER図です。
 
-![ER図](https://gyazo.com/8488fa9eb08a09639360788814f2918c)
+![ER図](https://gyazo.com/8488fa9eb08a09639360788814f2918c/raw)
 
 
 ユーザーは複数のプロジェクトを持つ
@@ -174,7 +174,7 @@ ActionLogs テーブル
 | photo_id    | references | foreign_key: true, null: true, on_delete: nullify |
 
 🛠️ ローカルでの動作手順
-$ git clone https://github.com/yourname/construction-photos.git
+$ git clone https://github.com/youheishimada/ConstructionPhoyos2.git
 $ cd construction-photos
 $ bundle install
 $ rails db:create && rails db:migrate
