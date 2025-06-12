@@ -14,11 +14,11 @@ module Magic
       # 黒板に文字を1行ずつ描画
       blackboard.combine_options do |c|
         c.gravity "NorthWest"
-        c.font "/usr/share/fonts/truetype/noto/NotoSansCJK-Regular.ttc"
+        c.font "/usr/share/fonts/noto-cjk/NotoSansCJK-Regular.ttc"
         c.fill "white"
         c.pointsize (blackboard.height * 0.05).to_i 
          y = 20  # 初期y位置
-         line_height = 10  # 行間（フォントサイズに応じて調整）
+         line_height = 18  # 行間（フォントサイズに応じて調整）
 
         # テキストを配列化してループ描画
         lines = []
