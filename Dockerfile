@@ -46,21 +46,22 @@ RUN SECRET_KEY_BASE_DUMMY=1 ./bin/rails assets:precompile
 # Final stage for app image
 FROM base
 
-# Install packages needed for deployment
+# 必要パッケージのインストール + フォント追加
 RUN apt-get update -qq && \
     apt-get install --no-install-recommends -y \
     curl \
+    unzip \
     default-mysql-client \
     libvips \
-    fonts-noto-cjk \
-    fontconfig && \  
-    fc-cache -fv && \  
-    dpkg-reconfigure fontconfig && \ 
+    fontconfig && \
     rm -rf /var/lib/apt/lists /var/cache/apt/archives
 
-# ✅ デバッグ用（あとで削除）
-RUN echo "📦 Notoフォント検索結果:" && find /usr/share/fonts -type f -name "*CJK*.ttc"
-
+# 📦 IPAexフォントのコピーと展開
+COPY ipaexfont00401.zip /tmp/
+RUN unzip /tmp/ipaexfont00401.zip -d /usr/share/fonts/truetype/ipaex && \
+    fc-cache -fv && \
+    rm -f /tmp/ipaexfont00401.zip
+    
 # Copy built artifacts: gems, application
 COPY --from=build /usr/local/bundle /usr/local/bundle
 COPY --from=build /rails /rails

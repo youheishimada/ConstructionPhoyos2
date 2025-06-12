@@ -14,7 +14,7 @@ module Magic
       # 黒板に文字を1行ずつ描画
       blackboard.combine_options do |c|
         c.gravity "NorthWest"
-        c.font "/usr/share/fonts/noto-cjk/NotoSansCJK-Regular.ttc"
+        c.font "/usr/share/fonts/truetype/ipaex/ipaexg.ttf"
         c.fill "white"
         c.pointsize (blackboard.height * 0.05).to_i 
          y = 20  # 初期y位置
