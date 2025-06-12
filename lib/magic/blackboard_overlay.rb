@@ -12,9 +12,10 @@ module Magic
       blackboard.resize "#{(photo.width / 3).to_i}x"
 
       # 黒板に文字を1行ずつ描画
+      Rails.logger.info "フォントパス: #{Rails.root.join("app/assets/fonts/ipaexg.ttf")}"
       blackboard.combine_options do |c|
         c.gravity "NorthWest"
-        c.font "/usr/share/fonts/truetype/ipaex/ipaexg.ttf"
+        c.font Rails.root.join("app/assets/fonts/ipaexg.ttf").to_s
         c.fill "white"
         c.pointsize (blackboard.height * 0.05).to_i 
          y = 20  # 初期y位置
