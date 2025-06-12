@@ -57,6 +57,7 @@ RUN apt-get update -qq && \
 
 # ✅ Notoフォントの存在確認（Renderのログに表示されます）  
 RUN find /usr/share/fonts -name '*Noto*' || echo "Notoフォントが見つかりません"
+RUN echo "📦 Notoフォント検索結果:" && find /usr/share/fonts -type f -name "*CJK*.ttc"
 
 # Copy built artifacts: gems, application
 COPY --from=build /usr/local/bundle /usr/local/bundle
