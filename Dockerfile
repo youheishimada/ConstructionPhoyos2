@@ -62,11 +62,11 @@ RUN apt-get update -qq && \
 ENV LANG=ja_JP.UTF-8
 
 # 📦 IPAexフォントのコピーと展開
-COPY ipaexfont00401.zip /tmp/
-RUN unzip /tmp/ipaexfont00401.zip -d /usr/share/fonts/truetype/ipaex && \
+COPY IPAexfont00401.zip /tmp/
+RUN unzip /tmp/IPAexfont00401.zip -d /usr/share/fonts/truetype/ipaex && \
     fc-cache -fv && \
     find /usr/share/fonts -name "ipaex*" && \
-    rm -f /tmp/ipaexfont00401.zip
+    rm -f /tmp/IPAexfont00401.zip
 
 # Copy built artifacts: gems, application
 COPY --from=build /usr/local/bundle /usr/local/bundle
