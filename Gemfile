@@ -79,3 +79,4 @@ gem 'mini_magick'
 gem 'image_processing', '~> 1.2'
 gem 'rails-i18n'
 gem 'aws-sdk-s3', require: false
+gem 'dotenv-rails'

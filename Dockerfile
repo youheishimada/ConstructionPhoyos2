@@ -25,7 +25,7 @@ RUN apt-get update -qq && \
     git \
     libvips \
     pkg-config \
-    fonts-noto-cjk
+    fonts-noto
 
 # Install application gems
 COPY Gemfile Gemfile.lock ./
@@ -52,8 +52,11 @@ RUN apt-get update -qq && \
     curl \
     default-mysql-client \
     libvips \
-    fonts-noto-cjk && \
+    fonts-noto && \
     rm -rf /var/lib/apt/lists /var/cache/apt/archives
+
+# ✅ Notoフォントの存在確認（Renderのログに表示されます）  
+RUN find /usr/share/fonts -name '*Noto*' || echo "Notoフォントが見つかりません"
 
 # Copy built artifacts: gems, application
 COPY --from=build /usr/local/bundle /usr/local/bundle

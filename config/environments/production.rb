@@ -13,6 +13,7 @@ Rails.application.configure do
   config.active_storage.service = :amazon
 
   config.log_level = :info
+  config.logger = ActiveSupport::Logger.new(Rails.root.join("log/production.log"))
   config.log_tags = [ :request_id ]
 
   config.action_mailer.perform_caching = false
@@ -26,5 +27,5 @@ Rails.application.configure do
   # config.force_ssl = true
   # config.action_mailer.raise_delivery_errors = false
 
-  config.consider_all_requests_local = true
+   config.consider_all_requests_local = false
 end

@@ -27,7 +27,8 @@ class PhotosController < ApplicationController
       project_name: @photo.project_name || "",
       contractor: @photo.contractor || ""
     }
-
+    
+    Rails.logger.info("📝 CREATE用 text_data: #{text_data.inspect}")
     Magic::BlackboardOverlay.compose_overlay(
       photo_path: tmp_photo_path.to_s,
       output_path: tmp_output_path.to_s,
@@ -83,6 +84,7 @@ end
     }
 
     # ✅ 黒板画像を合成
+    Rails.logger.info("📝 UPDATE用 text_data: #{text_data.inspect}")
     Magic::BlackboardOverlay.compose_overlay(
       photo_path: tmp_photo_path.to_s,
       output_path: tmp_output_path.to_s,
