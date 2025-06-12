@@ -60,8 +60,9 @@ RUN apt-get update -qq && \
 COPY ipaexfont00401.zip /tmp/
 RUN unzip /tmp/ipaexfont00401.zip -d /usr/share/fonts/truetype/ipaex && \
     fc-cache -fv && \
+    find /usr/share/fonts -name "ipaex*" && \
     rm -f /tmp/ipaexfont00401.zip
-    
+
 # Copy built artifacts: gems, application
 COPY --from=build /usr/local/bundle /usr/local/bundle
 COPY --from=build /rails /rails
