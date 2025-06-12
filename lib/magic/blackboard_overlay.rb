@@ -17,9 +17,9 @@ module Magic
         c.gravity "NorthWest"
         c.font Rails.root.join("app/assets/fonts/ipaexg.ttf").to_s
         c.fill "white"
-        c.pointsize (blackboard.height * 0.05).to_i 
+        c.pointsize (blackboard.height * 0.04).to_i 
          y = 20  # 初期y位置
-         line_height = 18  # 行間（フォントサイズに応じて調整）
+         line_height = 10  # 行間（フォントサイズに応じて調整）
 
         # テキストを配列化してループ描画
         lines = []
