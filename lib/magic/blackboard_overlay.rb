@@ -17,21 +17,22 @@ module Magic
         c.gravity "NorthWest"
         c.font Rails.root.join("app/assets/fonts/ipaexg.ttf").to_s
         c.fill "white"
-        c.pointsize (blackboard.height * 0.04).to_i 
-         y = 20  # 初期y位置
-         line_height = 10  # 行間（フォントサイズに応じて調整）
 
-        # テキストを配列化してループ描画
+        font_size = (blackboard.height * 0.06).to_i
+        c.pointsize font_size
+        y = 20
+        line_height = (font_size * 1.3).to_i
+
         lines = []
         lines << "年月日: #{text_data[:date]}"
         lines << "工事番号: #{text_data[:work_number].to_s.gsub('-', '－')}"
         lines << "工事件名: #{text_data[:project_name]}"
-        lines += text_data[:work_content].to_s.split(/\r?\n/)  # 工事内容の複数行対応
+        lines += text_data[:work_content].to_s.split(/\r?\n/)
         lines << "箇所: #{text_data[:location]}"
         lines << "施工者: #{text_data[:contractor]}"
 
         lines.each do |line|
-          escaped_line = line.gsub('"', '\"')  # ダブルクォートのエスケープ
+          escaped_line = line.gsub('"', '\"')
           c.draw "text 20,#{y} \"#{escaped_line}\""
           y += line_height
         end
