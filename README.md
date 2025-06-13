@@ -48,6 +48,9 @@
 
 🌐 アプリURL
  🔗 https://constructionphoyos2-1.onrender.com
+ Basic認証 ID：admin
+ Basic認証 パスワード：17web
+
 
 🧱 使用技術・ライブラリ
 
