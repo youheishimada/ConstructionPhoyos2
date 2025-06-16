@@ -53,6 +53,7 @@
       <% else %>
         <p class="text-muted">編集履歴はまだありません。</p>
       <% end %>
+      <%= link_to "Excel出力（この一覧をダウンロード）", project_photos_path(@project, format: :xlsx), class: "btn btn-success mb-3" %>
     </div>
   </div>
 </div>

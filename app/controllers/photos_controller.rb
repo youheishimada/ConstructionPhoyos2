@@ -127,6 +127,18 @@ def destroy
   redirect_to project_path(@project), notice: "写真を削除しました。"
 end
 
+      def index
+      @photos = @project.photos.includes(:user)
+
+      respond_to do |format|
+        format.html
+        format.xlsx do
+          filename = "project_#{@project.id}_photos_#{Time.zone.now.strftime('%Y%m%d')}.xlsx"
+          response.headers['Content-Disposition'] = "attachment; filename=#{filename}"
+        end
+      end
+    end
+
   private
 
   def set_project
@@ -150,3 +162,5 @@ end
     )
   end
 end
+  
+ 
