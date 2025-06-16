@@ -1,0 +1,15 @@
+wb = xlsx_package.workbook
+
+wb.add_worksheet(name: "台帳") do |sheet|
+  sheet.add_row ["撮影日", "施工者", "作業内容", "備考", "合成写真"]
+
+  @photos.each do |photo|
+    sheet.add_row [
+      photo.date,
+      photo.contractor,
+      photo.work_content,
+      photo.note,
+      "" # 画像はここに貼りたい（後述）
+    ]
+  end
+end

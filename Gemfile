@@ -80,3 +80,5 @@ gem 'image_processing', '~> 1.2'
 gem 'rails-i18n'
 gem 'aws-sdk-s3', require: false
 gem 'dotenv-rails'
+gem 'axlsx_rails'
+gem 'rubyXL'

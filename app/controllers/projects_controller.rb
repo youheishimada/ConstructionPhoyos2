@@ -27,9 +27,17 @@ class ProjectsController < ApplicationController
       .group_by { |photo| photo.created_at.to_date }
   end
 
+  def export_excel
+  @photos = @project.photos.includes(:image_with_blackboard_attachment)
+
+  respond_to do |format|
+    format.xlsx
+   end
+  end
+
   private
 
   def project_params
     params.require(:project).permit(:title, :site_name, :start_date, :end_date)
+   end
   end
-end
