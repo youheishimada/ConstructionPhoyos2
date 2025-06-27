@@ -1,19 +1,26 @@
 wb = xlsx_package.workbook
 
-wb.add_worksheet(name: "工事写真一覧") do |sheet|
-  # ヘッダー行
-  sheet.add_row ["ID", "工事番号", "工事個所", "工事内容", "撮影日", "担当者", "メモ"]
+wb.add_worksheet(name: "写真一覧") do |sheet|
+  # 見出し行（任意）
+  sheet.add_row ["ファイル名", "項目", "値"]
 
-  # 各データ行
   @photos.each do |photo|
-    sheet.add_row [
-      photo.id,
-      photo.work_number,
-      photo.location,
-      photo.work_content,
-      photo.date&.strftime("%Y/%m/%d"),
-      photo.user&.name || photo.user&.email,
-      photo.note
-    ]
+    text_data = {
+      "年月日" => photo.date&.strftime("%Y/%m/%d") || "未入力",
+      "工事番号" => photo.work_number || "未入力",
+      "工事個所" => photo.location || "未入力",
+      "工事内容" => photo.work_content || "未入力"
+    }
+
+    text_data.each do |label, value|
+      sheet.add_row [
+        photo.image_with_blackboard.filename.to_s,
+        label,
+        value
+      ]
+    end
+
+    # 空行（見やすく）
+    sheet.add_row []
   end
 end
