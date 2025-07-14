@@ -9,52 +9,53 @@ class PhotosController < ApplicationController
     @photo = @project.photos.build
   end
 
-  def create
+ def create
   @photo = @project.photos.build(photo_params)
   @photo.user = current_user
 
-  if @photo.save
-    tmp_photo_path = Rails.root.join("tmp", "photo_#{@photo.id}.jpg")
-    tmp_output_path = Rails.root.join("tmp", "combined_#{@photo.id}.jpg")
-
-    File.open(tmp_photo_path, 'wb') { |f| f.write(@photo.image.download) }
-
-    text_data = {
-      date: @photo.date&.strftime("%Y年%m月%d日") || "日付未入力",
-      work_number: @photo.work_number || "",
-      work_content: @photo.work_content || "",
-      location: @photo.location || "",
-      project_name: @photo.project_name || "",
-      contractor: @photo.contractor || ""
-    }
-    
-    Rails.logger.info("📝 CREATE用 text_data: #{text_data.inspect}")
-    Magic::BlackboardOverlay.compose_overlay(
-      photo_path: tmp_photo_path.to_s,
-      output_path: tmp_output_path.to_s,
-      text_data: text_data
-    )
-
-    File.open(tmp_output_path) do |file|
-      @photo.image_with_blackboard.attach(
-        io: file,
-        filename: "combined_#{@photo.id}.jpg",
-        content_type: 'image/jpeg'
-      )
-    end
-
-    # 添付後にチェックする
-    unless @photo.image_with_blackboard.attached?
-      Rails.logger.error("⚠️ 黒板付き画像が添付されませんでした Photo ID: #{@photo.id}")
-    end
-
-    File.delete(tmp_photo_path) if File.exist?(tmp_photo_path)
-    File.delete(tmp_output_path) if File.exist?(tmp_output_path)
-
-    redirect_to [@project, @photo], notice: "黒板付き写真を作成しました"
-  else
+  unless @photo.save
+    Rails.logger.error("❌ Photo保存失敗: #{@photo.errors.full_messages}")
     render :new, alert: "アップロードに失敗しました"
+    return
   end
+
+  tmp_photo_path = Rails.root.join("tmp", "photo_#{@photo.id}.jpg")
+  tmp_output_path = Rails.root.join("tmp", "combined_#{@photo.id}.jpg")
+
+  File.open(tmp_photo_path, 'wb') { |f| f.write(@photo.image.download) }
+
+  text_data = {
+    date: @photo.date&.strftime("%Y年%m月%d日") || "日付未入力",
+    work_number: @photo.work_number || "",
+    work_content: @photo.work_content || "",
+    location: @photo.location || "",
+    project_name: @photo.project_name || "",
+    contractor: @photo.contractor || ""
+  }
+
+  Rails.logger.info("📝 CREATE用 text_data: #{text_data.inspect}")
+  Magic::BlackboardOverlay.compose_overlay(
+    photo_path: tmp_photo_path.to_s,
+    output_path: tmp_output_path.to_s,
+    text_data: text_data
+  )
+
+  File.open(tmp_output_path) do |file|
+    @photo.image_with_blackboard.attach(
+      io: file,
+      filename: "combined_#{@photo.id}.jpg",
+      content_type: 'image/jpeg'
+    )
+  end
+
+  unless @photo.image_with_blackboard.attached?
+    Rails.logger.error("⚠️ 黒板付き画像が添付されませんでした Photo ID: #{@photo.id}")
+  end
+
+  File.delete(tmp_photo_path) if File.exist?(tmp_photo_path)
+  File.delete(tmp_output_path) if File.exist?(tmp_output_path)
+
+  redirect_to [@project, @photo], notice: "黒板付き写真を作成しました"
 end
 
   def show
@@ -126,6 +127,24 @@ def destroy
 
   redirect_to project_path(@project), notice: "写真を削除しました。"
 end
+
+  def download_original
+    @photo = Photo.find(params[:id])
+    if @photo.image.attached?
+      redirect_to rails_blob_url(@photo.image, disposition: "attachment")
+    else
+      redirect_to project_photo_path(@photo.project, @photo), alert: "元画像が見つかりません。"
+    end
+  end
+
+  def download_with_blackboard
+    @photo = Photo.find(params[:id])
+    if @photo.image_with_blackboard.attached?
+      redirect_to rails_blob_url(@photo.image_with_blackboard, disposition: "attachment")
+    else
+      redirect_to project_photo_path(@photo.project, @photo), alert: "黒板付き画像が見つかりません。"
+    end
+  end
 
       def index
       @photos = @project.photos.includes(:user)

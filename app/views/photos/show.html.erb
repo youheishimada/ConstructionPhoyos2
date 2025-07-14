@@ -13,6 +13,7 @@
       <h5 class="fw-semibold mb-2">アップロード写真</h5>
       <% if @photo.image.attached? %>
         <%= image_tag @photo.image.variant(resize_to_limit: [350, 350]), class: "img-fluid rounded mb-2 border", style: "max-width: 90%;" %>
+      　<%= link_to '元画像ダウンロード', download_original_project_photo_path(@project, @photo), class: 'btn btn-outline-primary' %>
       <% else %>
         <p class="text-muted">画像はありません。</p>
       <% end %>
@@ -22,7 +23,7 @@
       <h5 class="fw-semibold mb-2">黒板付き画像</h5>
       <% if @photo.image_with_blackboard.attached? %>
         <%= image_tag @photo.image_with_blackboard.variant(resize_to_limit: [350, 350]), class: "img-fluid rounded mb-2 border", style: "max-width: 90%;" %><br>
-        <%= link_to "ダウンロード", rails_blob_path(@photo.image_with_blackboard, disposition: "attachment"), download: "工事写真_#{@photo.id}.jpg", class: "btn btn-outline-secondary btn-sm mt-2" %>
+        <%= link_to '黒板付き画像ダウンロード', download_with_blackboard_project_photo_path(@project, @photo), class: 'btn btn-outline-secondary' %>
       <% else %>
         <p class="text-muted">黒板付き画像は未生成です</p>
       <% end %>
