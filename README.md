@@ -323,3 +323,57 @@ Python（openpyxl, xlwings）などによる .xlsm 操作
 
 項目の並び替えや翻訳も可能に 🔜 将来 - VBA / Python による .xlsm テンプレ反映の自動化
 画像の直接貼り付けによる視認性向上
+
+（2025年7月12日）
+✅ 実装内容
+1. アップロードされた元画像のダウンロード機能
+photos_controller.rb に download_original アクションを追加。
+
+rails_blob_url を使用して元画像ファイル（image）を直接ダウンロードできるように設定。
+
+ビュー（show.html.erb）に「元画像ダウンロード」ボタンを追加。
+
+2. 黒板付き画像のダウンロード機能
+download_with_blackboard アクションを追加し、image_with_blackboard が添付されている場合にダウンロードを可能に。
+
+ビューにも「黒板付き画像ダウンロード」ボタンを追加。
+
+3. ルーティングの整備
+routes.rb に以下のメンバーアクションを追加し、各写真単位でのダウンロードリンクに対応：
+
+ruby
+コピーする
+編集する
+member do
+  get :download_original
+  get :download_with_blackboard
+end
+4. 動作確認
+Railsログ（development.log）で保存・添付処理が正しく行われていることを確認。
+
+IRB で photo.image.attached? の検証により、元画像の状態をチェック。
+
+rails_blob_url によりダウンロード用URLが正常に生成されることも確認済み。
+
+✅ Git 操作履歴
+変更内容をローカルで commit：
+
+sql
+コピーする
+編集する
+git commit -m "元画像と黒板付き画像のダウンロード機能を追加"
+GitHub リモートリポジトリ ConstructionPhoyos2 に正常に push 完了：
+
+css
+コピーする
+編集する
+git push origin main
+📝 今後の検討課題
+ダウンロードボタンの表示位置・UIの調整（スマートフォン向けのレイアウトも考慮）
+
+黒板付き画像が未生成時のリマインド通知（必要に応じて）
+
+サブモジュール（ConstructionPhotos）の内容変更がある場合の整理
+
+将来的にはZIPで一括ダウンロード機能やS3経由の直接リンク配布も検討
+
